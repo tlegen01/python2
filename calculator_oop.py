@@ -1,42 +1,44 @@
 import openpyxl
 from openpyxl import Workbook
 
-class MyCalculator:
-    @staticmethod  # дакоратор который делает метод в классе статическим(без параметра селф и инициализации)
-    def summ(val1: float, val2: float):
-        return val1 + val2
 
-    def subtraction(val1: float, val2: float):
-        return val1 - val2
-
-    def multiplication(val1: float, val2: float):
-        return val1 * val2
-
-    def division(val1: float, val2: float):
-        if val2 != 0:
-            return val1 / val2
-        else:
-            print("vy vveli 0")
-            return 0
-
-
-MyCalculator.division(15, 17)
-print(MyCalculator.division(15, 17))
+# class MyCalculator:
+#     @staticmethod  # дакоратор который делает метод в классе статическим(без параметра селф и инициализации)
+#     def summ(val1: float, val2: float):
+#         return val1 + val2
+#
+#     def subtraction(val1: float, val2: float):
+#         return val1 - val2
+#
+#     def multiplication(val1: float, val2: float):
+#         return val1 * val2
+#
+#     def division(val1: float, val2: float):
+#         if val2 != 0:
+#             return val1 / val2
+#         else:
+#             print("vy vveli 0")
+#             return 0
+#
+#
+# MyCalculator.division(15, 17)
+# print(MyCalculator.division(15, 17))
 
 ##############################################################################################################
 
-class Generator:
-    def __init__(self, name: str, index: str, value: str):
-        self.name = name
-        self.index = index
-        self.value = value
-    def get_name(self):
-        return f"{self.name} {self.index} {self.value}"
-
-ran = []
-for i in range(1, 1001):
-    ran.append(Generator(name=f"_{i}", index=f"{i}", value=f"_A{i}").get_name())
-print(ran)
+# class Generator:
+#     def __init__(self, name: str, index: str, value: str):
+#         self.name = name
+#         self.index = index
+#         self.value = value
+#
+#     def get_name(self):
+#         return (self.name, self.index, self.value)
+#
+# ran = []
+# for i in range(1, 1001):
+#     ran.append(Generator(name=f"_{i}", index=f"{i}", value=f"_A{i}").get_name())
+# print(ran)
 
 ###############################################################################################################
 from openpyxl.utils import get_column_letter
@@ -65,11 +67,16 @@ class Produrty:
 
     def zarobotok(self):
         return f"{self.tovar},{self.prodazhi},{self.pribyl}"
+
     def pribyl_dir(self):
         for i in self.pribyl:
             if i == "Да":
                 return self.pribyl
-
+    def is_pribyl(self):
+        if str(self.pribyl).lower() == 'да':
+            return True
+        else:
+            return False
 
 
 obshee_masiv1 = []
@@ -90,25 +97,31 @@ for row in range(1, max_row + 1):
         sbyt=tovar_add[6],
         pribyl=tovar_add[7]
     )
+    print(naimenovanie)
+    print(type(naimenovanie))
     obshee = naimenovanie.zarobotok()
     pribl = naimenovanie.pribyl_dir()
     # print(obshee)
     obshee_masiv = obshee.split(",")
     # print(obshee_masiv)
 
-    obshee_masiv1.append(obshee_masiv)
-# print(obshee_masiv1)
+    obshee_masiv1.append(naimenovanie)
+print(obshee_masiv1)
 kniga1 = Workbook()
 stranica1 = kniga1.active
 # for row in range(0, len(obshee_masiv1)):
 #     for col in range(0, len(obshee_masiv1[row])):
 #         stranica1.cell(row=col + 1, column=row + 1).value = obshee_masiv1[row][col]
-
+index = 0
 for row in range(0, len(obshee_masiv1)):
-    for col in range(0, len(obshee_masiv1[row])):
-        # print(stroka_final[row])
-        # col_letter = get_column_letter(col)
-        stranica1[f"{get_column_letter(col + 1)}{row + 1}"] = obshee_masiv1[row][col]
-print(obshee_masiv1)
+    if obshee_masiv1[row].is_pribyl():
+        index += 1
+        stranica1[f"A{index + 1}"] = obshee_masiv1[row].tovar
+        stranica1[f"B{index + 1}"] = obshee_masiv1[row].prodazhi
+        # for col in range(0, len(obshee_masiv1[row])):
+        #     # print(stroka_final[row])
+        #     # col_letter = get_column_letter(col)
+        #     stranica1[f"{get_column_letter(col + 1)}{index + 1}"] = obshee_masiv1[row][col]
+# print(obshee_masiv1)
 
 kniga1.save("home_work/oop.xlsx")
