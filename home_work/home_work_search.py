@@ -25,7 +25,6 @@ find3 = text2.find(str1, 713)
 find4 = text2.find(str1, 1563)
 arr1 = [x for x in str1]
 
-index = 0
 for i in arr1:
         print(ord(i))
 
