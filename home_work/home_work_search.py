@@ -23,7 +23,7 @@ find1 = text2.find(str1)
 find2 = text2.find(str1, 386)
 find3 = text2.find(str1, 713)
 find4 = text2.find(str1, 1563)
-arr1 = [x for x in str1]
+arr1 = [x for x in text1]
 
 for i in arr1:
         print(ord(i))
