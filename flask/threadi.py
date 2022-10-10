@@ -202,13 +202,7 @@ def async_func():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         asyncio.gather(
-        *[
-            async_get_meteo(city_list[0]),
-            async_get_meteo(city_list[1]),
-            async_get_meteo(city_list[2]),
-            async_get_meteo(city_list[3]),
-            async_get_meteo(city_list[4])
-        ]
+        *[async_get_meteo(city) for city in city_list]
         )
     )
 

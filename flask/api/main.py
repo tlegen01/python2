@@ -1,3 +1,4 @@
+import flask
 from flask import Flask
 
 app = Flask(__name__)
@@ -13,3 +14,9 @@ def products():
 @app.route("/video_study/")
 def video_study():
     return "<h1>Video</h1>"
+
+################################
+
+@app.route('/login', method=['GET'])
+def login():
+    return flask.render_template('login.html')
